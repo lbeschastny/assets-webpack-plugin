@@ -61,7 +61,15 @@ AssetsWebpackPlugin.prototype = {
           }
 
           var typeName = getAssetKind(options, asset)
-          typeMap[typeName] = assetPath + asset
+          if (options.allowMultiple) {
+                  // return an array of asserts
+            if (!(typeName in typeMap)) {
+              typeMap[typeName] = []
+            }
+            typeMap[typeName].push(assetPath + asset)
+          } else {
+            typeMap[typeName] = assetPath + asset
+          }
 
           return typeMap
         }, {})
